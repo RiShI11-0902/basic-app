@@ -2,14 +2,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
 import {
-    Alert,
-    FlatList,
-    Keyboard,
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  Alert,
+  FlatList,
+  Keyboard,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -81,6 +81,7 @@ export default function Todo() {
     };
 
     setTodos((currentTodos) => [newTodo, ...currentTodos]);
+    
     setTask("");
     Keyboard.dismiss();
   };

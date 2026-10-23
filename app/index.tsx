@@ -1,105 +1,66 @@
+// Simple Calculator App
+// Use: copy this code into App.js (or rename this file to App.js)
 
-import { useEffect, useState } from "react";
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState } from 'react';
+import { Button, Text, TextInput, View } from 'react-native';
 
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-  category: string;
-};
+export default function App() {
+  // state to store the two numbers and the result
+  const [num1, setNum1] = useState('');
+  const [num2, setNum2] = useState('');
+  const [result, setResult] = useState<number | string>(0);
 
-export default function Index() {
-  const [products, setProducts] = useState<Product[]>([]);
+  // this function runs when a button is pressed
+  const calculate = (operation : any) => {
+    const a = parseFloat(num1);
+    const b = parseFloat(num2);
 
-  const [loading, setLoading] = useState(true);
+    // check that both boxes have numbers
+    if (isNaN(a) || isNaN(b)) {
+      setResult('Enter both numbers');
+      return;
+    }
 
-  useEffect(() => {
-      fetch("https://dummyjson.com/products")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-      })
-  }, []);
+    if (operation === '+') setResult(a + b);
+    if (operation === '-') setResult(a - b);
+    if (operation === '*') setResult(a * b);
+    if (operation === '/') {
+      if (b === 0) setResult('Cannot divide by 0');
+      else setResult(a / b);
+    }
+  };
 
   return (
-    <SafeAreaView >
-      <FlatList
-          data={products}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.list}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <Image
-                source={{ uri: item.thumbnail }}
-                style={styles.image}
-              />
+    <View style={{ marginTop: 60, padding: 20 }}>
+      <Text style={{ fontSize: 26, marginBottom: 20 }}>Calculator</Text>
 
-              <View style={styles.details}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.category}>{item.category}</Text>
-                <Text style={styles.price}>${item.price}</Text>
-              </View>
-            </View>
-          )}
-        />
-    </SafeAreaView>
+      {/* keyboardType="numeric" opens the phone's number keypad */}
+      <TextInput
+        placeholder="First number"
+        value={num1}
+        onChangeText={setNum1}
+        keyboardType="numeric"
+        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
+      />
+
+      <TextInput
+        placeholder="Second number"
+        value={num2}
+        onChangeText={setNum2}
+        keyboardType="numeric"
+        style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
+      />
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10 }}>
+        <Button title="+" onPress={() => calculate('+')} />
+        <Button title="-" onPress={() => calculate('-')} />
+        <Button title="x" onPress={() => calculate('*')} />
+        <Button title="/" onPress={() => calculate('/')} />
+      </View>
+
+      <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 10 }}>
+        Result: {String(result)}
+      </Text>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: "#f5f5f5",
-  },
-  heading: {
-    fontSize: 26,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  list: {
-    paddingBottom: 20,
-  },
-  card: {
-    flexDirection: "row",
-    backgroundColor: "white",
-    padding: 12,
-    marginBottom: 12,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
-    resizeMode: "contain",
-  },
-  details: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  category: {
-    fontSize: 13,
-    color: "gray",
-    marginTop: 5,
-  },
-  price: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "green",
-    marginTop: 8,
-  },
-});

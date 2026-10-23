@@ -42,6 +42,16 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="weather"
+        options={{
+          title: "Weather",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="code-working-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
