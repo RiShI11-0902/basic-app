@@ -38,7 +38,7 @@ export default function TabLayout() {
         options={{
           title: "To Do",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="code-working-outline" size={size} color={color} />
+            <Ionicons name="bag-handle" size={size} color={color} />
           ),
         }}
       />
@@ -48,7 +48,17 @@ export default function TabLayout() {
         options={{
           title: "Weather",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="code-working-outline" size={size} color={color} />
+            <Ionicons name="sunny" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="LF"
+        options={{
+          title: "L&F",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="sunny" size={size} color={color} />
           ),
         }}
       />
